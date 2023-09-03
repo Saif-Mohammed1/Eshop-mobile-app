@@ -43,10 +43,10 @@ const CustomDrawerContent = (props) => {
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
 
-        {/* <DrawerItem
+        <DrawerItem
           label="contact us"
-          onPress={() => Linking.openURL("https://mywebsite.com/help")}
-        /> */}
+          onPress={() => navigation.navigate("Contact Us")}
+        />
       </DrawerContentScrollView>
       <View style={styles.userContainer}>
         {currentUser ? (

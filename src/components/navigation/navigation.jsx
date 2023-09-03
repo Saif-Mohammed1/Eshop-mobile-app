@@ -65,6 +65,7 @@ const NavStack = () => (
       component={SignUp}
       // options={{ headerShown: false }}
     />
+    <Stack.Screen name="Contact Us" component={ContactScreen} />
   </Stack.Navigator>
 );
 
@@ -85,7 +86,7 @@ const NavigateDrawing = () => {
           title: "Home",
         }}
       />
-      <Drawer.Screen name="Contact Us" component={ContactScreen} />
+      {/* <Drawer.Screen name="Contact Us" component={ContactScreen} /> */}
     </Drawer.Navigator>
   );
 };
