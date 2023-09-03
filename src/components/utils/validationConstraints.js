@@ -2,10 +2,10 @@ import { validate } from "validate.js";
 
 export const validateLength = (id, value, minLength, maxLength, allowEmpty) => {
   const constraints = {
-    presence: { allowEmpty },
+    presence: { allowEmpty: false },
   };
 
-  if (!allowEmpty || value !== "") {
+  if (value !== "") {
     constraints.length = {};
 
     if (minLength != null) {
@@ -19,7 +19,7 @@ export const validateLength = (id, value, minLength, maxLength, allowEmpty) => {
 
   const validationResult = validate({ [id]: value }, { [id]: constraints });
 
-  return validationResult && validationResult[id];
+  return validationResult && validationResult;
 };
 
 export const validateString = (id, value) => {

@@ -15,7 +15,7 @@ export const validateInput = (inputId, inputValue) => {
     return validatePassword(inputId, inputValue);
   } else if (inputId === "confirmPassword") {
     return validateConfirmPassword(inputId, inputValue);
-  } else if (inputId === "about") {
-    return validateLength(inputId, inputValue, 0, 150, true);
+  } else if (inputId === "message") {
+    return validateLength(inputId, inputValue, 10, 150, true);
   }
 };

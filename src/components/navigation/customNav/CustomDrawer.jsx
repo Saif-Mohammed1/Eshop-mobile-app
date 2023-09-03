@@ -10,31 +10,47 @@ import {
   TouchableOpacity,
   View,
   StyleSheet,
+  Alert,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../store/user/userSelector";
 import { Entypo } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "../../utils/axios/axios";
+import { setCurrentUser } from "../../store/user/userSlice";
 
 const CustomDrawerContent = (props) => {
   const currentUser = useSelector(selectCurrentUser);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const onPress = () => {
-    navigation.navigate("Log-In");
+    navigation.navigate("Login");
+  };
+
+  const SignOut = async () => {
+    try {
+      await api.post("/logout");
+      await AsyncStorage.clear(); // Clear the entire storage when the user signs out
+      dispatch(setCurrentUser(null));
+    } catch (error) {
+      Alert.alert(error);
+      console.log("error", error);
+    }
   };
   return (
     <View style={styles.container}>
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
 
-        <DrawerItem
-          label="Help"
+        {/* <DrawerItem
+          label="contact us"
           onPress={() => Linking.openURL("https://mywebsite.com/help")}
-        />
+        /> */}
       </DrawerContentScrollView>
       <View style={styles.userContainer}>
         {currentUser ? (
-          <TouchableOpacity style={styles.userButton}>
+          <TouchableOpacity style={styles.userButton} onPress={SignOut}>
             <Entypo name="log-out" size={24} color="black" />
             <Text style={styles.userButtonText}>Log Out</Text>
           </TouchableOpacity>

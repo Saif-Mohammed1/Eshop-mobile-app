@@ -31,6 +31,7 @@ import { useState } from "react";
 import SearchScreen from "../screens/searchScreen";
 import DashboardScreen from "../screens/dashboardScreen";
 import { selectCartCount } from "../store/cart/cartSelector";
+import ContactScreen from "../screens/contactScreen";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -53,8 +54,12 @@ const NavigateStack = () => (
 );
 const NavStack = () => (
   <Stack.Navigator>
+    <Stack.Screen
+      name="HomePage"
+      component={Navigator}
+      options={{ headerShown: false }}
+    />
     <Stack.Screen name="Login" component={SignIn} />
-
     <Stack.Screen
       name="Sign-Up"
       component={SignUp}
@@ -69,10 +74,18 @@ const NavigateDrawing = () => {
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       // drawerType="front"
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      {/* <Drawer.Screen name="HomeScreen" component={HomeScreen} /> */}
-      <Drawer.Screen name="Log-In" component={NavStack} />
-      {/* <Drawer.Screen name="dashboard" component={DashboardScreen} /> */}
+      <Drawer.Screen
+        name="HomeTap"
+        component={NavStack}
+        options={{
+          title: "Home",
+        }}
+      />
+      <Drawer.Screen name="Contact Us" component={ContactScreen} />
     </Drawer.Navigator>
   );
 };
@@ -163,7 +176,7 @@ const CustomTabBarButton = (
 };
 
 const Navigator = () => {
-  const navigation = useNavigation(); // Use the useNavigation hook to get the navigation prop
+  // const navigation = useNavigation(); // Use the useNavigation hook to get the navigation prop
   const dispatch = useDispatch();
   const cartCount = useSelector(selectCartCount);
   useEffect(() => {
@@ -190,8 +203,8 @@ const Navigator = () => {
         }}
         listeners={({ navigation }) => ({
           tabPress: (e) => {
-            // e.preventDefault();
-            // navigation.dispatch(DrawerActions.toggleDrawer()); // Toggle drawer on tab press
+            navigation.dispatch(DrawerActions.toggleDrawer()); // Toggle drawer on tab press
+            e.preventDefault();
             // navigation.toggleDrawer(); // Toggle drawer on tab press
           },
         })}
@@ -274,4 +287,5 @@ const Navigator = () => {
   );
 };
 
-export default Navigator;
+// export default Navigator;
+export default NavigateDrawing;
