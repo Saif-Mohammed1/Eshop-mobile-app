@@ -11,7 +11,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
-import { fetchHomeItem } from "../utils/apiUtils";
 import HomeScreen from "../screens/homeScreen";
 import ShopScreen from "../screens/shopScreen";
 import Category from "../category/category";
@@ -32,6 +31,7 @@ import SearchScreen from "../screens/searchScreen";
 import DashboardScreen from "../screens/dashboardScreen";
 import { selectCartCount } from "../store/cart/cartSelector";
 import ContactScreen from "../screens/contactScreen";
+import { fetchHomeItem } from "../utils/apiUtils";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -70,6 +70,11 @@ const NavStack = () => (
 );
 
 const NavigateDrawing = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    fetchHomeItem(dispatch);
+  }, []);
+
   //  drawerType = "front";
   return (
     <Drawer.Navigator
@@ -178,11 +183,7 @@ const CustomTabBarButton = (
 
 const Navigator = () => {
   // const navigation = useNavigation(); // Use the useNavigation hook to get the navigation prop
-  const dispatch = useDispatch();
   const cartCount = useSelector(selectCartCount);
-  useEffect(() => {
-    fetchHomeItem(dispatch);
-  }, []);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -223,7 +224,7 @@ const Navigator = () => {
       <Tab.Screen
         name="Home"
         component={NavigateStack}
-        options={{
+        options={({ navigation }) => ({
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={"red"} />
           ),
@@ -255,7 +256,7 @@ const Navigator = () => {
               </View>
             );
           },
-        }}
+        })}
       />
       <Tab.Screen
         name="Cart"

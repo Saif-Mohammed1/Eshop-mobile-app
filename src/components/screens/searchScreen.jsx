@@ -14,7 +14,7 @@ import {
 } from "../store/categories/categoriesSelector";
 import { fetchProducts } from "../utils/apiUtils";
 import ProductCard from "../productCard/productCard";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 
 const SearchScreen = () => {
   const [name, setName] = useState("");
@@ -41,23 +41,37 @@ const SearchScreen = () => {
         </View>
       ) : (
         <View style={{ flex: 1, padding: 6 }}>
-          <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginVertical: 10,
+              backgroundColor: "white",
+              // borderRadius: 13,
+              paddingHorizontal: 8,
+            }}
+          >
             <TextInput
               value={name}
               onChangeText={onTextChangeHandler}
-              placeholder="what you are looking for"
+              placeholder="what you are looking for...?"
               style={{
-                backgroundColor: "white",
                 //   filteredCategories.length > 0 && name !== ""
                 //     ? "white"
                 //     : "#a38354ed",
+                flex: 1,
                 color: "#0c070733",
-                padding: 8,
-                marginTop: 8,
+                paddingVertical: 8,
                 // fontWeight: "bold",
                 fontSize: 18,
                 letterSpacing: 1.2,
               }}
+            />
+            <FontAwesome5
+              name="search"
+              size={24}
+              color="gray"
+              style={{ position: "absolute", right: 8 }}
             />
           </View>
           {filteredCategories.length > 0 && name !== "" && (
